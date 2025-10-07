@@ -1,0 +1,13 @@
+@import url('./main-layout.css');
+:host ::part(header-cell) {
+    font-weight: bold;
+}
+.link-button {
+  background: black;
+  border: none;
+  color: var(--lumo-primary-text-color);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+}
