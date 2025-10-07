@@ -6,7 +6,6 @@ public class GlobaleWerte {
 	public static final String smtpAbsender = "sthoms@thoms-edv.de";
 	
 	public static final String[] Aenderungen = { 
-			"<b>07.10.2025</b>	'Alle Fänge' Datumsfeld. Anpassen Thoms-Dialog",
 			"<b>04.10.2025</b>	'Alle Fänge' den Refresh angepasst und Defaulwerte gesetzt.",
 			"<b>03.10.2025-b</b>	'Alle Fänge' -> User auf STERN , 'Mein Fangbuch' -> Datum richtig sortiert. ",
 			"<b>03.10.2025-a</b>	Anpassung in 'Alle Fänge'",
@@ -31,7 +30,7 @@ public class GlobaleWerte {
 	
 	// 53.9015, Longitude: 9.5417
 	
-	public boolean pruefeGPS(double x , double y) {
+	public static boolean pruefeGPS(double x , double y) {
 		if ( ( x >= nordBreite & x <=  sueddBreite ) & ( y >= westLaenge & y <=  ostLaenge ) )
 		return true;
 		else return false;

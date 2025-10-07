@@ -189,7 +189,7 @@ public class MainLayout extends AppLayout {
 		meinDialog.setTop("Aktuelle Version <h2>" + GlobaleWerte.Version + "</h2>");
 		
 		Dialog dialog = meinDialog.erzeugeDialog();
-		dialog.setHeight("200px");
+		//dialog.setHeight("200px");
 		
 		dialog.open();
 	}
