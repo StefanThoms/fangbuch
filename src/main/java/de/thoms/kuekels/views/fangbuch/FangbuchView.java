@@ -68,7 +68,7 @@ public class FangbuchView extends VerticalLayout {
         H2 header = new H2("Fangbuch");
         header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
         //add(header);
-        DateTimeFormatter germanFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy").withLocale(Locale.GERMAN);
+        DateTimeFormatter germanFormatter = DateTimeFormatter.ofPattern("dd.LL").withLocale(Locale.GERMAN);
      
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

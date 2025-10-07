@@ -2,10 +2,11 @@ package de.thoms.kuekels;
 
 public class GlobaleWerte {
 	public static final String Titel = "Fangbuch Mözener See";
-	public static final String Version ="v04.10.2025";
+	public static final String Version ="v07.10.2025";
 	public static final String smtpAbsender = "sthoms@thoms-edv.de";
 	
 	public static final String[] Aenderungen = { 
+			"<b>07.10.2025</b>	'Alle Fänge' Datumsfeld. Anpassen Thoms-Dialog",
 			"<b>04.10.2025</b>	'Alle Fänge' den Refresh angepasst und Defaulwerte gesetzt.",
 			"<b>03.10.2025-b</b>	'Alle Fänge' -> User auf STERN , 'Mein Fangbuch' -> Datum richtig sortiert. ",
 			"<b>03.10.2025-a</b>	Anpassung in 'Alle Fänge'",
