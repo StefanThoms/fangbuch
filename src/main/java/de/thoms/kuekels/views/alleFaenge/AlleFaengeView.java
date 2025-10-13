@@ -176,8 +176,10 @@ public class AlleFaengeView extends VerticalLayout {
 		String sOptionen[] = { "Meine Einträge",  "Alle" };	//{ "Meine Einträge", "Mein Verein", "Alle" };
 		if (maybeUser.isPresent()) {
 			optionen.setItems(sOptionen);
+			optionen.setVisible(true);
 		} else {
 			optionen.setItems("Alle");
+			optionen.setVisible(false);
 		}
 
 		optionen.setValue("Alle");
