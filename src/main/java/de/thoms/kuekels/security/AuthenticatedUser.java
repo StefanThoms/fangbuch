@@ -18,6 +18,7 @@ public class AuthenticatedUser {
 
 		this.userRepository = userRepository;
 		this.authenticationContext = authenticationContext;
+	
 	}
 
 	@Transactional
@@ -27,7 +28,10 @@ public class AuthenticatedUser {
 	}
 
 	public void logout() {
+		
 		authenticationContext.logout();
 	}
+	
+	
 
 }

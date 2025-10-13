@@ -93,12 +93,7 @@ public class FangEingabeView extends VerticalLayout {
 			InputStream inputStream = buffer.getInputStream();
 			try {
 				byte[] imageBytes = inputStream.readAllBytes();
-
-				// Beispiel: Bild als Entity speichern
-				// Foto foto = new Foto();
 				neuerFang.setBild(imageBytes);
-				// fotoRepository.save(foto);
-
 				Notification.show("Bild erfolgreich hochgeladen!");
 			} catch (IOException e) {
 				Notification.show("Fehler beim Speichern des Bildes.");
@@ -126,6 +121,8 @@ public class FangEingabeView extends VerticalLayout {
 				if (gewichtField.getOptionalValue().isEmpty()) {
 					gewichtField.setValue((double) 0);
 				}
+				if(laengeField.getValue() > 116 && gewählt.getName().equals("Hecht"))
+					Notification.show("Der Hecht ist sehr groß!");
 
 			}
 
@@ -144,8 +141,6 @@ public class FangEingabeView extends VerticalLayout {
 				neuerFang.setGewicht(gewichtField.getValue());
 				neuerFang.setReleased(oitem.getValue());
 				neuerFang.setBemerkung(ta.getValue());
-				System.out.println("Lat : " + neuerFang.getLat());
-
 				fangRepository.save(neuerFang);
 
 				Notification.show("Fisch gespeichert!");
@@ -185,23 +180,25 @@ public class FangEingabeView extends VerticalLayout {
 
 	@ClientCallable
 	private void receivePosition(double latitude, double longitude) {
-		System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
-
-		System.out.println(" LAT -> " + latitude + " >= " + GlobaleWerte.sueddBreite + " & " + latitude + " <= "
-				+ GlobaleWerte.nordBreite);
-		System.out.println(" LON -> " + longitude + " >= " + GlobaleWerte.westLaenge + " & " + longitude + " <= "
-				+ GlobaleWerte.ostLaenge);
+		/*
+		 * System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
+		 * 
+		 * System.out.println(" LAT -> " + latitude + " >= " + GlobaleWerte.sueddBreite
+		 * + " & " + latitude + " <= " + GlobaleWerte.nordBreite);
+		 * System.out.println(" LON -> " + longitude + " >= " + GlobaleWerte.westLaenge
+		 * + " & " + longitude + " <= " + GlobaleWerte.ostLaenge);
+		 */
 
 		if ((latitude >= GlobaleWerte.sueddBreite & latitude <= GlobaleWerte.nordBreite)
 				& (longitude >= GlobaleWerte.westLaenge & longitude <= GlobaleWerte.ostLaenge)) {
 			neuerFang.setLat(latitude);
 			neuerFang.setLon(longitude);
-			fangRepository.save(neuerFang);
+			
 		} else {
 			Notification.show("Die GPX-Daten sind nicht am See und werden nicht verwendet!");
 		}
+		fangRepository.save(neuerFang);
 
-		// TODO: z. B. in DB speichern oder an eine Map-Komponente übergeben
 	}
 
 }

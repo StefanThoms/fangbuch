@@ -64,7 +64,6 @@ import de.thoms.kuekels.data.UserRepository;
 import de.thoms.kuekels.security.AuthenticatedUser;
 import de.thoms.kuekels.views.alleFaenge.AlleFaengeView;
 import de.thoms.kuekels.views.benutzerprofil.BenutzerprofilView;
-import de.thoms.kuekels.views.demo.Demo;
 import de.thoms.kuekels.views.fangbuch.FangbuchView;
 import de.thoms.kuekels.views.fangeingabe.FangEingabeView;
 import de.thoms.kuekels.views.letzteFaenge.LetzteFaenge;
@@ -252,7 +251,6 @@ public class MainLayout extends AppLayout {
 		Div layout = new Div();
 		layout.addClassNames(Display.FLEX, AlignItems.CENTER, Padding.Horizontal.LARGE);
 
-		// H1 appName = new H1("v.26.08.2025");
 		H1 appName = new H1(GlobaleWerte.Version);
 
 		appName.addClassNames(Margin.Vertical.MEDIUM, Margin.End.AUTO, FontSize.LARGE, Margin.Horizontal.AUTO);

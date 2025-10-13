@@ -48,7 +48,9 @@ public class FangbuchView extends VerticalLayout {
 	private List<Fischart> fischarten;
 	private String username;
 	private Grid<Fang> userGrid;
-
+	private LocalDate start;
+	private LocalDate end;
+	
     public FangbuchView(UserRepository userRepository , FangRepository fangrepository,FischartRepository fischartRepository) {
     	this.fangrepository = fangrepository;
     	
@@ -61,7 +63,8 @@ public class FangbuchView extends VerticalLayout {
     	LocalDate heute = LocalDate.now();
     	
     	datum.setValue(String.valueOf(heute.getYear()));
-    	
+    	start 	= LocalDate.ofYearDay(heute.getYear(), 1);
+		end 	= start.plusYears(1).minusDays(1);
     	
         setSpacing(false);
 
@@ -96,15 +99,9 @@ public class FangbuchView extends VerticalLayout {
             img.setWidth("80px");
             return img;
         }).setHeader("Vorschau");
-       
-        //userGrid.addColumn(if(list -> list.getReleased()) );
-
-        
-        //Button
+   
         userGrid.addComponentColumn(list -> {
             HorizontalLayout actions = new HorizontalLayout();
-
-            // Bearbeiten-Button
             Button edit = new Button("", VaadinIcon.EDIT.create());
             edit.addClickListener(e -> {
                 openDialog( list  );
@@ -132,9 +129,9 @@ public class FangbuchView extends VerticalLayout {
         	});
       
         List <Fang> list = fangrepository.findByUser(username);
-        datum.addClientValidatedEventListener(e -> {
-        	LocalDate start = LocalDate.ofYearDay((int) datum.getValue(), 1);
-    		LocalDate end = start.plusYears(1).minusDays(1);
+
+        datum.addValueChangeListener(e -> {
+        	
         	if((int) datum.getValue() == -1 ) {
         		start = LocalDate.ofYearDay(2000, 1);
         		end = start.plusYears(100).minusDays(1);
@@ -175,8 +172,7 @@ public class FangbuchView extends VerticalLayout {
         try {
 			ta.setValue(list.getBemerkung());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			//System.out.println("Kein Kommentar!");
+
 		}
         
         String vorgabeName =  list.getFischart();
