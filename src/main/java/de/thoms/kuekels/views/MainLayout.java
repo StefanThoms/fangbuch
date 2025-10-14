@@ -138,7 +138,7 @@ public class MainLayout extends AppLayout {
 		boolean istAngemeldet = auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal());
 
 		VerticalLayout menu1 = new VerticalLayout();
-
+ 
 
 		if (istAngemeldet) {
 			menu1.add(new RouterLink("Fangeingabe", FangEingabeView.class));

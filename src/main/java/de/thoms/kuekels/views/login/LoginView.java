@@ -1,6 +1,10 @@
 package de.thoms.kuekels.views.login;
 
+import java.security.SecureRandom;
+import java.util.Optional;
 import java.util.UUID;
+
+import javax.swing.text.html.HTML;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -10,6 +14,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -19,20 +24,29 @@ import com.vaadin.flow.router.internal.RouteUtil;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import de.thoms.kuekels.data.User;
 import de.thoms.kuekels.data.UserRepository;
 import de.thoms.kuekels.security.AuthenticatedUser;
-import de.thoms.kuekels.security.Passwd;
 import de.thoms.kuekels.services.EmailService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @AnonymousAllowed
 @PageTitle("Login")
 @Route(value = "login")
 public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
+
+@Autowired
+private PasswordEncoder passwordEncoder;
+
     private final AuthenticatedUser authenticatedUser;
     private final EmailService emailService ;
 
-    public LoginView(AuthenticatedUser authenticatedUser , EmailService emailService ) {
+    public LoginView(AuthenticatedUser authenticatedUser ,UserRepository userRepository , EmailService emailService ) {
     	this.emailService = emailService;
         this.authenticatedUser = authenticatedUser;
         setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
@@ -53,7 +67,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
         
         addForgotPasswordListener(event -> {
         
-        	SendPasswordToken();
+        	SendPasswordToken(userRepository);
     	});
         setOpened(true);
     }
@@ -69,12 +83,13 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
         setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
     }
-    public void SendPasswordToken() {
+    public void SendPasswordToken(UserRepository userRepository) {
     	
     	Dialog dialog = new Dialog();
     	HorizontalLayout hl = new HorizontalLayout();
     	VerticalLayout vl = new VerticalLayout();
-    	
+    	TextArea textArea = new TextArea();
+    	textArea.setValue("Trag deine e-mail ein.\nWenn es die im System gibt, wird das Passwort auf ein zufälliges Passwort zurückgesetzt und du erhälst es per Mail.");
     	EmailField email = new EmailField("E-Mail Adresse");
     	email.setErrorMessage("Bitte eine richtige EMail eintragen!");
     	Button ok = new Button("Passwort an E-Mail senden");
@@ -84,6 +99,22 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     	
     	ok.addClickListener(e -> {
     		String smail = email.getValue();
+    		
+    	    Optional<User> optionalUser = userRepository.findByEmail(smail);
+
+    	    if (optionalUser.isEmpty()) {
+    	        Notification.show("Kein Benutzer mit dieser E-Mail gefunden!");
+    	        return;
+    	    }
+    	    User user = optionalUser.get();
+    	    // Zufälliges Passwort generieren
+    	    String newPassword = generateRandomPassword();
+
+    	    // Passwort verschlüsseln (z. B. mit BCrypt)
+    	    user.setHashedPassword(passwordEncoder.encode(newPassword));
+    	    userRepository.save(user);
+
+    		
     		if( smail.isBlank()) {
     			Notification.show("Bitte e-mail-Adresse eintragen!");
     		}
@@ -92,7 +123,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     		}else {
     			
     			emailService.sendMail(email.getValue(),
-    					 "Passwort im Fangbuch zurückgesetzt", "Das neue Passwort ist : " );
+    					 "Passwort im Fangbuch zurückgesetzt", "Das neue Passwort ist : [" + newPassword + "]" );
     			dialog.close();
     			Notification.show("Passwort wurde an die e-mail Adresse gesendet!");
     		}
@@ -102,7 +133,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     		dialog.close();
     	});
     	hl.add(ok , cancel);
-    	vl.add(email,hl);
+    	vl.add(textArea,email,hl);
     	dialog.add(vl );
     	dialog.open();
     	
@@ -115,6 +146,16 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     	
     	
     	
+    }
+    private String generateRandomPassword() {
+        int length = 10;
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 
 }
