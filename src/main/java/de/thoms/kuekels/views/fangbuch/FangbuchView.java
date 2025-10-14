@@ -128,21 +128,24 @@ public class FangbuchView extends VerticalLayout {
         	
         	});
       
-        List <Fang> list = fangrepository.findByUser(username);
+        //List <Fang> list = fangrepository.findByUser(username);
 
         datum.addValueChangeListener(e -> {
         	
         	if((int) datum.getValue() == -1 ) {
         		start = LocalDate.ofYearDay(2000, 1);
         		end = start.plusYears(100).minusDays(1);
-        	} 
+        	} else
+        	{
+        		start = LocalDate.ofYearDay((int) datum.getValue(), 1);
+        		end = start.plusYears(1).minusDays(1);
+        	}
     		List<Fang> ergebnisse = fangrepository.findAllByDatumBetweenNative(start, end , username);
     		userGrid.setItems(ergebnisse);
-    		Notification.show("Hallo " + datum.getValue() + " - " + start.toString() + " - " + end.toString() + " - " + username);
-    		
+
     	});
-        userGrid.setItems(list);
-       
+		List<Fang> ergebnisse = fangrepository.findAllByDatumBetweenNative(start, end , username);
+		userGrid.setItems(ergebnisse);
         add(datum,userGrid);
 
     }
