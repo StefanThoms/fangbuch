@@ -139,6 +139,7 @@ public class MainLayout extends AppLayout {
 
 		VerticalLayout menu1 = new VerticalLayout();
 
+
 		if (istAngemeldet) {
 			menu1.add(new RouterLink("Fangeingabe", FangEingabeView.class));
 			menu1.add(new RouterLink("Mein Fangbuch", FangbuchView.class));

@@ -19,6 +19,7 @@ import com.vaadin.flow.router.internal.RouteUtil;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import de.thoms.kuekels.data.UserRepository;
 import de.thoms.kuekels.security.AuthenticatedUser;
 import de.thoms.kuekels.security.Passwd;
 import de.thoms.kuekels.services.EmailService;
@@ -89,6 +90,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
     		if(email.isInvalid()) {
     			Notification.show("Das ist keine richtige Adresse!");
     		}else {
+    			
     			emailService.sendMail(email.getValue(),
     					 "Passwort im Fangbuch zurückgesetzt", "Das neue Passwort ist : " );
     			dialog.close();

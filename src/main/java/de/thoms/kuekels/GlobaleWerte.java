@@ -2,9 +2,9 @@ package de.thoms.kuekels;
 
 public class GlobaleWerte {
 	public static final String Titel = "Fangbuch Mözener See";
-	public static final String Version ="v13.10.2025";
+	public static final String Version ="v14.10.2025";
 	//public static final String smtpAbsender = "sthoms@thoms-edv.de";
-	public static final String smtpAbsender = "sthoms@gmx.de";
+	public static final String smtpAbsender = "Passwort Reset <sthoms@gmx.de>";
 	
 	public static final String[] Aenderungen = { 
 			"<b>13.10.2025</b>	'Alle Fänge' Das Optionen Feld wird nur für angemeldete Benutzer angezeigt.",
