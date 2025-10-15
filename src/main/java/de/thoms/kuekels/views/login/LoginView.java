@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.swing.text.html.HTML;
 
+import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -88,8 +89,11 @@ private PasswordEncoder passwordEncoder;
     	Dialog dialog = new Dialog();
     	HorizontalLayout hl = new HorizontalLayout();
     	VerticalLayout vl = new VerticalLayout();
+    	String sText = "Trag deine e-mail ein.Wenn es die im System gibt, wird das Passwort auf ein zufälliges Passwort zurückgesetzt und du erhälst es per Mail.";
+    	//Html html = new Html(sText);
+    	
     	TextArea textArea = new TextArea();
-    	textArea.setValue("Trag deine e-mail ein.\nWenn es die im System gibt, wird das Passwort auf ein zufälliges Passwort zurückgesetzt und du erhälst es per Mail.");
+    	textArea.setValue(sText);
     	EmailField email = new EmailField("E-Mail Adresse");
     	email.setErrorMessage("Bitte eine richtige EMail eintragen!");
     	Button ok = new Button("Passwort an E-Mail senden");
@@ -132,6 +136,8 @@ private PasswordEncoder passwordEncoder;
     	cancel.addClickListener(e -> {
     		dialog.close();
     	});
+    	textArea.setWidth("100%");
+    	email.setWidth("100%");
     	hl.add(ok , cancel);
     	vl.add(textArea,email,hl);
     	dialog.add(vl );

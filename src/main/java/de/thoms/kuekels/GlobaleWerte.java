@@ -2,11 +2,14 @@ package de.thoms.kuekels;
 
 public class GlobaleWerte {
 	public static final String Titel = "Fangbuch Mözener See";
-	public static final String Version ="v14.10.2025";
+	public static final String Version ="v15.10.2025";
 	//public static final String smtpAbsender = "sthoms@thoms-edv.de";
-	public static final String smtpAbsender = "Passwort Reset <sthoms@gmx.de>";
+	public static final String smtpAbsender = "Fangbuch Mözener See <sthoms@gmx.de>";
 	
 	public static final String[] Aenderungen = { 
+			"<b>15.10.2025</b>	Dialog Passwortrücksetzung angepasst.",
+			"<b>14.10.2025</b>	'Alle Fänge' Die Jahre werden berücksichtigt.",
+			"<b>14.10.2025</b>	'Login' Passwortreset wird über die EMail versendet.",
 			"<b>13.10.2025</b>	'Alle Fänge' Das Optionen Feld wird nur für angemeldete Benutzer angezeigt.",
 			"<b>04.10.2025</b>	'Alle Fänge' den Refresh angepasst und Defaulwerte gesetzt.",
 			"<b>03.10.2025-b</b>	'Alle Fänge' -> User auf STERN , 'Mein Fangbuch' -> Datum richtig sortiert. ",

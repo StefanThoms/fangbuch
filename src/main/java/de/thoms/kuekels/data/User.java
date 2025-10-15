@@ -23,8 +23,15 @@ public class User extends AbstractEntity {
     private String email;
     private String telefon;
     private boolean gps;
+    private String bootsnummer;
     
-    @Enumerated(EnumType.STRING)
+    public String getBootsnummer() {
+		return bootsnummer;
+	}
+	public void setBootsnummer(String bootsnummer) {
+		this.bootsnummer = bootsnummer;
+	}
+	@Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
     @Lob
